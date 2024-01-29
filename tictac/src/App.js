@@ -32,6 +32,49 @@ function App() {
     }
   };
 
+  const makeMove = async (gameId, position) => {
+    const response = await fetch('http://localhost:5000/move', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ gameId, position })
+    });
+    return response.json();
+  };
+
+  const handleMakeMove = async (position) => {
+    console.log("handling move")
+    if (!gameId || board[position] !== null) return;
+  
+    try {
+      const updatedGame = await makeMove(gameId, position);
+      
+      setBoard(updatedGame.board);
+      setCurrentPlayer(updatedGame.currentPlayer);
+  
+      if (updatedGame.status === 'won') {
+        setNotification(`The Winner is. ${updatedGame.player}.  Click on Start New Game otherwise wait for 10 seconds`);
+        setTimeout(startNewGame, 10000); 
+        setBoard(Array(9).fill(null))
+        
+       
+      }
+      else if(updatedGame.status === 'tied'){
+        setNotification(`Match ${updatedGame.status}. Click on Start New Game otherwise wait for 10 seconds`);
+        setTimeout(startNewGame, 10000); 
+        setBoard(Array(9).fill(null))
+      }
+      else if(updatedGame.reply === 'AT'){
+        setNotification(`${updatedGame.message}`)
+      }
+    } catch (error) {
+      console.error('Error making a move:', error);
+      setNotification('Failed to make a move.');
+    }
+  };
+
+
+
+
   useEffect(() =>{
     startNewGame()
   },[])
@@ -42,8 +85,10 @@ function App() {
         onStartNewGame={startNewGame} //passing props to gameControl component
         currentPlayer={currentPlayer}
       />
-      <GameBoard />
+      <GameBoard board={board} onMakeMove={handleMakeMove}/>
       <Notification message={notification} />
+      
+
     </div>
   );
 }

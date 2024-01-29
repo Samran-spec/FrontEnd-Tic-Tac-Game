@@ -1,0 +1,45 @@
+/* Styles for the game board container */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  grid-gap: 10px; 
+  max-width: 300px; 
+  margin: 0 auto; 
+  height: 300px; 
+  align-content: center; 
+  justify-content: center; 
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+}
+
+/* Styles for each cell (button) in the grid */
+.game-board button {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+/* Styles for cells marked by player X */
+.game-board button.cell-x {
+  background-color: #4CAF50; /* Green color for player X */
+}
+
+/* Styles for cells marked by player O */
+.game-board button.cell-o {
+  background-color: #FFA500; /* Orange color for player O */
+}
+
+/* Hover effect for the buttons */
+.game-board button:hover {
+  opacity: 0.8;
+}
