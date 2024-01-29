@@ -1,9 +1,12 @@
-import React from 'react'
-
-const GameControl = () => {
+import React from "react";
+import "../styles/GameControl.css";
+const GameControl = ({ onStartNewGame, currentPlayer }) => {
   return (
-    <div>GameControl</div>
-  )
-}
+    <div className="game-control">
+      <button onClick={onStartNewGame}>Start New Game</button>
+      {currentPlayer && <p>Current Player: {currentPlayer}</p>}
+    </div>
+  );
+};
 
-export default GameControl
+export default GameControl;
